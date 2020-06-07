@@ -53,11 +53,29 @@ function start() {
     });
 }
 
+function backToStart() {
+  inquirer
+    .prompt({
+      name: "userInput",
+      type: "list",
+      message:
+        "Would you like to return to main menu?",
+      choices: ["MAIN_MENU", "EXIT"],
+    })
+    .then(function (answer) {
+      if (answer.userInput === "MAIN_MENU") {
+        start();
+      } else {
+        connection.end();
+      }
+    });
+}
 function viewDepartments() {
-  connection.query("SELECT * FROM department", function (err, results) {
+  connection.query("SELECT * FROM department", (err, results) => {
     if (err) throw err;
     console.table(results);
-    start();
+    backToStart();
+    
   });
 }
 
@@ -68,7 +86,7 @@ function viewRoles() {
     function (err, results) {
       if (err) throw err;
       console.table(results);
-      start();
+      backToStart();
     }
   );
 }
@@ -81,7 +99,7 @@ function viewEmployees() {
     function (err, results) {
       if (err) throw err;
       console.table(results);
-      start();
+      backToStart();
     }
   );
 }
@@ -105,7 +123,7 @@ async function addDepartment () {
 }
 
 function addRole() {
-    connection.query ("select * from department", async function(err, results) {
+    connection.query ("select * from department", async (err, results) => {
 
         const departments = results.map ( (result) => ({
             name:result.name, 
@@ -135,7 +153,7 @@ function addRole() {
 }
 
 function addEmployee() {
-    connection.query ("select * from role", async function(err, results) {
+    connection.query ("select * from role", async (err, results) => {
 
         const roles = results.map ( (result) => ({
             name:result.title, 
@@ -166,7 +184,7 @@ function addEmployee() {
 
 function update_Employee() {
 
-    connection.query("select * from employee", function (err, employees) {
+    connection.query("select * from employee", (err, employees)  => {
 
         connection.query ("select * from role", async function(err, roles) {
 
