@@ -4,7 +4,7 @@ values ('Sales'),('Engineering'),('Finance'),('Legal');
 select * from department; 
 
 insert into role (title, salary, department_id)
-values ('Sales Lead',100000,1), ('CTO',500000,2),('Accountant',120000,3),('Lawyer',150000,4);
+values ('Sales Lead',100000,1), ('Technician',500000,2),('Accountant',120000,3),('Lawyer',150000,4);
 
 select * from role;
 

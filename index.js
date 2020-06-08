@@ -1,24 +1,24 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 
-// create the connection information for the sql database
+
 const connection = mysql.createConnection({
   host: "localhost",
 
-  // Your port; if not 3306
+  
   port: 3306,
 
-  // Your username
+  
   user: "root",
 
-  // Your password
+  
   password: "password",
   database: "employees",
 });
 
 connection.connect(function (err) {
   if (err) throw err;
-  // run the start function after the connection is made to prompt the user
+  
   start();
 });
 
@@ -32,27 +32,34 @@ function start() {
       choices: ["VIEW_DEPARTMENTS", "VIEW_ROLES", "VIEW_EMPLOYEES", "ADD_DEPARTMENTS", "ADD_ROLES", "ADD_EMPLOYEES", "UPDATE_EMPLOYEE_ROLE", "EXIT"],
     })
     .then(function (answer) {
-      // based on their answer, either call the bid or the post functions
-      if (answer.userInput === "VIEW_DEPARTMENTS") {
-        viewDepartments();
-      } else if (answer.userInput === "VIEW_ROLES") {
-        viewRoles();
-      } else if (answer.userInput === "VIEW_EMPLOYEES") {
-        viewEmployees();
-      } else if (answer.userInput === "ADD_DEPARTMENTS") {
-        addDepartment();
-      } else if (answer.userInput === "ADD_ROLES") {
-        addRole();
-      } else if (answer.userInput === "ADD_EMPLOYEES") {
-        addEmployee();
-      } else if (answer.userInput === "UPDATE_EMPLOYEE_ROLE") {
-        update_Employee();
-      }else {
-        connection.end();
-      }
-    });
-}
+      switch (answer.userInput){
 
+          case "VIEW_DEPARTMENTS":
+            viewDepartments()
+            break;
+          case "VIEW_ROLES":
+            viewRoles()
+            break;
+          case "VIEW_EMPLOYEES":
+            viewEmployees()
+            break;
+          case "ADD_DEPARTMENTS":
+            addDepartment()
+            break;
+          case "ADD_ROLES":
+            addRole()
+            break;
+          case "ADD_EMPLOYEES":
+            addEmployee()
+            break;
+          case "UPDATE_EMPLOYEE_ROLE":
+            update_Employee()
+            break;
+          default:
+            connection.end();
+      }
+})
+}
 function backToStart() {
   inquirer
     .prompt({
@@ -219,4 +226,4 @@ function update_Employee() {
 
     })
 
-}
+  }
